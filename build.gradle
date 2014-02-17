@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'application'
+
+def execMainClassName = 'com.bytefirm.finance.Application'
+def organizationId    = 'bytefirm'
+
+def projectSourceCompatibility = '1.7'
+def projectTargetCompatibility = '1.7'
+
+sourceCompatibility = projectSourceCompatibility
+targetCompatibility = projectTargetCompatibility
+
+mainClassName = "${execMainClassName}"
+
+def mavenArtifactId           = 'bytefirm-finance'
+def slf4jVersion              = '1.4.2'
+def groovyVersion             = '2.2.1'
+def springFrameworkBomVersion = '4.0.1.RELEASE'
+def junitVersion              = '4.11'
+def h2Version                 = '1.3.175'
+def gradleWrapperVersion      = '1.10'
+def postgreSQLVersion         = '9.3-1100-jdbc41'
+def commonsCollectionsVersion = '3.2.1'
+def jtaVersion                = '1.1'
+def hibernateVersion          = '3.4.0.GA'
+def hsqldbVersion             = '1.8.0.7'
+def javaAssistVersion         = '3.4.GA'
+
+repositories {
+        mavenCentral()
+        mavenLocal()        
+}
+
+dependencies {
+        compile ("org.codehaus.groovy:groovy-all:$groovyVersion",
+                 "org.springframework:spring-framework-bom:$springFrameworkBomVersion",
+                 "com.h2database:h2:$h2Version",
+                 "org.postgresql:postgresql:$postgreSQLVersion",
+                 "commons-collections:commons-collections:$commonsCollectionsVersion",
+                 "javax.transaction:jta:$jtaVersion",
+                 "org.hibernate:hibernate-annotations:$hibernateVersion",
+                 "org.slf4j:slf4j-simple:$slf4jVersion",
+                 "hsqldb:hsqldb:$hsqldbVersion",
+                 "javassist:javassist:$javaAssistVersion"
+        )
+
+        testCompile "junit:junit:$junitVersion"
+}
+
+task wrapper(type: Wrapper, description: 'Generates the Gradle wrapper.') {
+        gradleVersion = gradleWrapperVersion
+        jarFile = 'wrapper/wrapper.jar'
+}
