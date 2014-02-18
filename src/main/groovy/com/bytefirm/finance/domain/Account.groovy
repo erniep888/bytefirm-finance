@@ -22,7 +22,7 @@ import org.hibernate.cfg.*
  * Created by ernes_000 on 2/14/14.
  */
 @Entity
-class Account {
+class Account implements Comparable<Account> {
     @Id
     @SequenceGenerator(name="pk_sequence",sequenceName="account_id_seq", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_sequence")
@@ -38,4 +38,18 @@ class Account {
     String toString() {
         "$title - $type"
     }
+
+    @Override
+    int compareTo(Account compareAccount) {
+        return this.displayOrder - compareAccount.displayOrder
+    }
+
+    static Comparator<Account> FruitNameComparator = new Comparator<Account>() {
+
+        public int compare(Account account1, Account account2) {
+
+            return account1.compareTo(account2);
+        }
+
+    };
 }

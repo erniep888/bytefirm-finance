@@ -41,11 +41,31 @@ class Application {
         def configuration = application.configureHibernate()
         def factory = configuration.buildSessionFactory()
 
-        MonthlyAccountTool.processMonthlyTransactions(factory, 2013, 12)
-        MonthlyAccountTool.displayMonthlyAccountTotal(factory, 2013, 12)
 
-        MonthlyAccountTool.showProcessedTransactions(factory, 2013, 12)
-        println MonthlyAccountTool.getBalanceDelta(factory, 2013, 12)
+
+        def year = 2014
+        def month = 1
+
+        // Only build from where clause template if you want to overwrite the existing month where clauses
+//        for(int monthIndex = 2; monthIndex <= 12; monthIndex++){
+//            MonthlyWhereClauseBuilder.buildFromWhereClauseTemplate(factory, year, monthIndex)
+//        }
+
+
+        // Makes updates to the monthly account totals
+        //MonthlyAccountTool.processMonthlyTransactions(factory, year, month)
+
+        // Displays the totals in the monthly account totals in short form
+        //MonthlyAccountTool.displayMonthlyAccountTotal(factory, year, month)
+
+        // Displays the transactions used to calculate the totals using the month's where clauses
+//        MonthlyAccountTool.showProcessedTransactions(factory, year, month)
+
+        // Displays accounted transaction total vs the raw transaction total...returns the difference
+//        println MonthlyAccountTool.getBalanceDelta(factory, year, month)
+
+        MonthlyAccountTool.showAccountTotalsAsCsv(factory, 2013, 11, year, month)
+
     }
 
 

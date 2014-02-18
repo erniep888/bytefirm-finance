@@ -37,9 +37,73 @@ import java.text.DecimalFormat
  */
 class MonthlyAccountTool {
 
-    static showProcessedTransactions(factory, year, month){
-        def map = new HashMap<Account, List<WellsFargoCheckingTransaction>>()
+    static showAccountTotalsAsCsv(factory, startYear, startMonth, endYear, endMonth){
 
+        def maxMonth = 12
+        def loopingMonth = startMonth
+        for(int year = startYear; year <= endYear; year++){
+            if (year == endYear){
+                maxMonth = endMonth
+            }
+            for(int month = loopingMonth; month <= maxMonth; month++){
+                println("$month/$year")
+                def map = getProcessedTransactions(factory, year, month)
+                def keyCount = map.keySet().size()
+                def keyIndex = 0
+                for(def key : map.keySet()){
+                    print key.title
+                    keyIndex++
+                    if (keyIndex < keyCount){
+                        print ","
+                    }
+                }
+                keyIndex = 0
+                println()
+                for(def key : map.keySet()){
+                    def sum = new Double(0)
+                    for(def transaction : map[key].listIterator()){
+                        sum += transaction.adjustedAmount
+                    }
+                    print sum
+                    keyIndex++
+                    if (keyIndex < keyCount){
+                        print ","
+                    }
+                }
+                println()
+            }
+            loopingMonth = 1
+        }
+
+//        def map = getProcessedTransactions(factory, year, month)
+//
+//        for(def key : map.it()){
+//            def sum = new Double(0)
+//            println key
+//            for(def transaction : map[key].listIterator()){
+//                println ("\t" + transaction)
+//                sum += transaction.adjustedAmount
+//            }
+//            println ("\t\tTotal: $sum")
+//        }
+    }
+
+    static showProcessedTransactions(factory, year, month){
+        def map = getProcessedTransactions(factory, year, month)
+
+        for(def key : map.keySet()){
+            def sum = new Double(0)
+            println key
+            for(def transaction : map[key].listIterator()){
+                println ("\t" + transaction)
+                sum += transaction.adjustedAmount
+            }
+            println ("\t\tTotal: $sum")
+        }
+    }
+
+    private static LinkedHashMap<Account, List<WellsFargoCheckingTransaction>> getProcessedTransactions(factory, year, month){
+        def map = new LinkedHashMap<Account, List<WellsFargoCheckingTransaction>>()
 
         def session = factory.currentSession
         def tx = session.beginTransaction()
@@ -72,15 +136,7 @@ class MonthlyAccountTool {
         }
         tx.commit()
 
-        for(def key : map.keySet()){
-            def sum = new Double(0)
-            println key
-            for(def transaction : map[key].listIterator()){
-                println ("\t" + transaction)
-                sum += transaction.adjustedAmount
-            }
-            println ("\t\tTotal: $sum")
-        }
+        return map
     }
 
     static double getBalanceDelta(factory, year, month){
