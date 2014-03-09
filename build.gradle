@@ -29,6 +29,7 @@ def jtaVersion                = '1.1'
 def hibernateVersion          = '3.4.0.GA'
 def hsqldbVersion             = '1.8.0.7'
 def javaAssistVersion         = '3.4.GA'
+def jsonJackson               = '1.9.13'
 
 repositories {
         mavenCentral()
@@ -45,7 +46,8 @@ dependencies {
                  "org.hibernate:hibernate-annotations:$hibernateVersion",
                  "org.slf4j:slf4j-simple:$slf4jVersion",
                  "hsqldb:hsqldb:$hsqldbVersion",
-                 "javassist:javassist:$javaAssistVersion"
+                 "javassist:javassist:$javaAssistVersion",
+                 "org.codehaus.jackson:jackson-mapper-asl:$jsonJackson"
         )
 
         testCompile "junit:junit:$junitVersion"
