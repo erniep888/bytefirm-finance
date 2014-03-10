@@ -41,7 +41,7 @@ class Application {
         def configuration = application.configureHibernate()
         def factory = configuration.buildSessionFactory()
 
-//        application.createWellsFargoChecking(factory)
+        // application.createWellsFargoChecking(factory)  // used to insert each month's csv  TODO: make this command driven
 
         def year = 2014
         def month = 2
@@ -58,22 +58,24 @@ class Application {
 //        }
 
 
-        // Makes updates to the monthly account totals
 
 
-        //***  MonthlyAccountTool.processMonthlyTransactions(factory, year, month)
 
         // Displays the totals in the monthly account totals in short form
 //        MonthlyAccountTool.displayMonthlyAccountTotal(factory, year, month)
 
+
+        /***********************************************************************************/
+        // Makes updates to the monthly account totals
+//        MonthlyAccountTool.processMonthlyTransactions(factory, year, month)
         // Displays the transactions used to calculate the totals using the month's where clauses
-
-        //***  MonthlyAccountTool.showProcessedTransactions(factory, year, month)
-
+//        MonthlyAccountTool.showProcessedTransactions(factory, year, month)
         // Displays accounted transaction total vs the raw transaction total...returns the difference
 //        println MonthlyAccountTool.getBalanceDelta(factory, year, month)
+        /**********************************************************************************/
 
-        //***  MonthlyAccountTool.showAccountTotalsAsCsv(factory, 2013, 11, year, month)
+
+        //MonthlyAccountTool.showAccountTotalsAsCsv(factory, year, month, year, month)
 
     }
 
@@ -83,7 +85,8 @@ class Application {
         def tx = session.beginTransaction()
 
 //        def wellsFargoCsv = '/database/financeCsv/wellsfargo_checking_2012-11-01_to_2014_01__31.csv'
-        def wellsFargoCsv = '/database/financeCsv/wellsfargo_checking_2014_02.csv'
+//        def wellsFargoCsv = '/database/financeCsv/wellsfargo_checking_2014_02.csv'
+        def wellsFargoCsv = '/database/financeCsv/feb-2014.csv'
 
         BufferedReader bufferedReader = null
         String line = ""
