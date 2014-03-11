@@ -28,8 +28,7 @@ class MonthlyAccountTotal {
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_sequence")
     public Long id
     @OneToOne
-    public Account account
-    @Column(length = 2500)
+    public Account account    
     public Double total
     public Integer month
     public Integer year
