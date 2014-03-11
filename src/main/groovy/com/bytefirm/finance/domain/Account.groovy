@@ -44,7 +44,7 @@ class Account implements Comparable<Account> {
         return this.displayOrder - compareAccount.displayOrder
     }
 
-    static Comparator<Account> FruitNameComparator = new Comparator<Account>() {
+    static Comparator<Account> AccountComparator = new Comparator<Account>() {
 
         public int compare(Account account1, Account account2) {
 
